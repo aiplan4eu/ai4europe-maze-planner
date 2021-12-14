@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+message Empty {
+}
+
+message State {
+  string state = 1;
+}
+
+message Goal {
+  string goal = 1;
+}
+
+message Result {
+  string result = 1;
+}
+
+service MazeGUI {
+  rpc requestTask(Empty) returns(Goal);
+  rpc processTaskResult(Result) returns(Empty);
+  rpc getState(Empty) returns(State);
+  rpc visualizeState(State) returns(Empty);
+}

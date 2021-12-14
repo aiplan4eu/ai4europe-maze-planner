@@ -1,0 +1,7 @@
+{
+    "gui-webserverport": 8000,
+    "gui-grpcport": 8001,
+    "solver-grpcport": 8002,
+    "executor-grpcport": 8003,
+    "simulation-grpcport": 8004
+}

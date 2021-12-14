@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+message Problem {
+  // AIDDL specification of type:
+  // Problem@org.aiddl.common.planning.state-variable
+  string problem = 1;
+}
+
+message Solution {
+  // 0 solvable
+  // 1 unsolvable
+  int32 status = 1;
+  // AIDDL specification of type:
+  // SequentialPlan@org.aiddl.common.planning.state-variable.plan
+  repeated string action = 2;
+}
+
+service AiddlPlanner {
+  rpc plan(Problem) returns (Solution);
+}

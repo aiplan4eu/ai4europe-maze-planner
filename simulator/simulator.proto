@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+message Empty {
+}
+
+message State {
+  string state = 1;
+}
+
+message Action {
+  string action = 1;
+}
+
+message Operators {
+  repeated string ops = 1;
+}
+
+message Result {
+  string result = 1;
+}
+
+service AiddlSimulator {
+  rpc doAction(Action) returns (Result);
+  rpc getState(Empty) returns (State);
+  rpc setState(State) returns (Empty);
+  rpc setOperators(Operators) returns (Empty);
+}

@@ -1,0 +1,37 @@
+(#mod self org.aiddl.example.maze-planner.domain)
+
+(#req P org.aiddl.common.planning.state-variable)
+
+(Operator@P move
+  (name:(move ?D ?A ?L1 ?L2)
+  preconditions:{
+    (?D ?L2 ?L1):true
+    (map ?L2):free
+    (at ?A):?L1
+  }
+  effects:{
+    (at ?A):?L2
+    (map ?L2):?A
+    (map ?L1):free
+  }))
+
+(Operator@P push
+  (
+  name:(push ?D ?A ?L1 ?L2 ?L3)
+  preconditions:{
+    (at ?A):?L1  
+    (?D ?L2 ?L1):true
+    (?D ?L3 ?L2):true
+    (map ?L3):free    
+    (map ?L2):box
+    (map ?L1):?A
+
+  }
+  effects:{
+    (at ?A):?L2
+    (map ?L3):box
+    (map ?L2):?A
+    (map ?L1):free
+  }))
+
+(Operators@P operators { $move $push })

@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+message Empty {
+}
+
+message State {
+  string state = 1;
+}
+
+message Goal {
+  string goal = 1;
+}
+
+message Action {
+  string action = 1;
+}
+
+message Result {
+  string result = 1;
+}
+
+message Solution {
+  int32 status = 1;
+  repeated string action = 2;
+}
+
+message Problem {
+  string problem = 1;
+}
+
+service AiddlExecutor {
+  rpc assembleProblem(Goal) returns (Problem);
+  rpc doNextAction(Empty) returns (Action);
+  rpc processPlanningResult(Solution) returns (Result);
+  rpc processActionResult(Result) returns (Empty);
+  rpc processState(State) returns (Empty);
+}
+
+service MazeGUI {
+  rpc requestTask(Empty) returns(Goal);
+  rpc processTaskResult(Result) returns(Empty);
+  rpc getState(Empty) returns(State);
+  rpc visualizeState(State) returns(Empty);
+}
+
+service AiddlPlanner {
+  rpc plan(Problem) returns (Solution);
+}
+
+service AiddlSimulator {
+  rpc doAction(Action) returns (Result);
+  rpc getState(Empty) returns (State);
+  rpc setState(State) returns (Empty);
+}

@@ -1,0 +1,7 @@
+CairoSVG==2.5.2
+drawSvg==1.8.1
+grpcio==1.37.0
+grpcio-tools==1.37.0
+imageio==2.9.0
+Jinja2==2.10.1
+justpy==0.1.5
