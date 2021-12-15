@@ -1,12 +1,38 @@
 # AI4EU Maze Planning, Execution and Simulation
 
 This is an example of integrated planning, execution and simulation that can be
-executed on the AI4EI experiments platform. A Graphical User Interface (GUI)
-allows to assemble a simple maze with agents, pushable obstacles, and goal
-locations.  The GUI can send states to the simulator and request the goals to be
-reached by the executor. If added and connected in the Acumos Design Studio on
-the AI4EU experiments platform, the interaction between components will be
-orchestrated and the resulting solution can be executed in a cluster. 
+executed on the AI4EU experiments platform. A Graphical User Interface (GUI)
+allows to assemble a simple maze with up to five agents, pushable obstacles, and
+goal locations.  The GUI can send a state to the simulator (to overwrite the
+simulators current state) and request the goals to be reached by the executor.
+
+Here is a simplified summary of the behavior/flow of each component.
+
+GUI: 
+1. Assemble a maze (with goal locations for agents)
+2. Request goal achievement
+3. Wait for response from executor
+
+The GUI also draws the internal state of the simulator when it receives a
+message state message.
+
+Executor: 
+1. Wait for goal(s)
+2. Assemble planning problem
+3. Request plan from planner
+4. Execute plan (if one was found)
+5. Return success or failure to GUI
+
+Simulator:
+- Execute action (and update internal state accordingly)
+- Send state updates (when internal state changes)
+
+Planner:
+- Solve planning problem and return solution or failure
+
+If added and connected in the Acumos Design Studio on the AI4EU experiments
+platform, the interaction between components will be orchestrated and the
+resulting solution can be executed in a cluster.
 
 Below we explain how to get this solution to run on a local Kubernetes cluster
 via Minikube.
