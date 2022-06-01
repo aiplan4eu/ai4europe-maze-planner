@@ -2,6 +2,33 @@
 
 (#req P org.aiddl.common.planning.state-variable)
 
+(org.aiddl.type.term domains 
+  {
+    agent:[A1 A2 A3 A4 A5]
+    object:[free wall box A1 A2 A3 A4 A5]
+    position:[
+      (0 0) (0 1) (0 2) (0 3) (0 4)
+      (1 0) (1 1) (1 2) (1 3) (1 4)
+      (2 0) (2 1) (2 2) (2 3) (2 4)
+      (3 0) (3 1) (3 2) (3 3) (3 4)
+      (4 0) (4 1) (4 2) (4 3) (4 4)
+    ]
+    boolean:{true false}
+  }
+)
+
+(org.aiddl.type.term signatures 
+  {
+    (map position):object
+    (at agent):position
+    (N position position):boolean
+    (E position position):boolean
+    (S position position):boolean
+    (W position position):boolean
+  }
+)
+
+
 (Operator@P move
   (name:(move ?D ?A ?L1 ?L2)
   preconditions:{

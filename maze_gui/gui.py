@@ -37,7 +37,7 @@ def draw_state(s, g, dim, images):
                 color = '#dde3ed'
             elif v == m.BOX:
                 color = '#915d0f'
-            elif v in set([m.A1, m.A2, m.A3, m.A4, m.A5]):
+            elif v in set([m.A1, m.A2, m.A3, m.A4, m.A5, m.AGENT]):
                 color = '#ed761a'
             else:
                 color = '#cf1329'

@@ -23,12 +23,14 @@ class ExecutionServicer(executor_pb2_grpc.AiddlExecutorServicer):
     SUCCESS = Sym("success")
     FAILURE = Sym("failure")
     
-    def __init__(self, port, operators):
+    def __init__(self, port, operators, domains, signatures):
         self.port = port
 
         self.state = Set([])
         self.goal = Set([])
         self.operators = operators
+        self.domains = domains
+        self.signatures = signatures
 
         self.plan_exec_result = ExecutionServicer.SUCCESS
         self.action_result = ExecutionServicer.SUCCESS
@@ -38,6 +40,8 @@ class ExecutionServicer(executor_pb2_grpc.AiddlExecutorServicer):
         logger.info("assembling problem")
         self.goal = parse_term(request.goal)
         problem = Tuple([
+            KeyValue(Sym("domains"), self.domains),
+            KeyValue(Sym("signatures"), self.signatures),
             KeyValue(Sym("initial-state"), self.state),
             KeyValue(Sym("goal"), self.goal),
             KeyValue(Sym("operators"), self.operators)

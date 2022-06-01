@@ -9,6 +9,7 @@ from aiddl_core.representation.set import Set
 FREE = Sym("free")
 WALL = Sym("wall")
 BOX = Sym("box")
+AGENT = Sym("agnt")
 A1 = Sym("A1")
 A2 = Sym("A2")
 A3 = Sym("A3")
@@ -114,6 +115,9 @@ class Region:
                             Tuple([
                                 Int(j),
                                 Int(i)])))
+
+                    value = Sym("agnt")
+                    
                 state.add(
                     KeyValue(
                         Tuple(

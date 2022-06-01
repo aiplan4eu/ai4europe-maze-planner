@@ -1,0 +1,124 @@
+(#mod self org.aiddl.example.maze-planner.domain.v2)
+
+(#req P org.aiddl.common.planning.state-variable)
+
+(org.aiddl.type.term domains 
+  {
+    agent:[A1 A2 A3 A4 A5]
+    object:[free wall box agnt]
+    position:[
+      (0 0) (0 1) (0 2) (0 3) (0 4)
+      (1 0) (1 1) (1 2) (1 3) (1 4)
+      (2 0) (2 1) (2 2) (2 3) (2 4)
+      (3 0) (3 1) (3 2) (3 3) (3 4)
+      (4 0) (4 1) (4 2) (4 3) (4 4)
+    ]
+    boolean:{true false}
+  }
+)
+
+(org.aiddl.type.term signatures 
+  {
+    (map position):object
+    (at agent):position
+    (N position position):boolean
+    (E position position):boolean
+    (S position position):boolean
+    (W position position):boolean
+  }
+)
+
+
+(Operators@P operators {
+  (
+    name:(push-N ?A ?L1 ?L2 ?L3)
+    signature:[agent position position position]
+    preconditions:
+      {
+        (map ?L3):free
+        (N ?L3 ?L2):true
+        (map ?L2):box
+        (at ?A):?L1
+        (N ?L2 ?L1):true
+        (map ?L1):agnt
+      }
+
+    effects:{(at ?A):?L2 (map ?L2):agnt (map ?L1):free (map ?L3):box}
+  )
+
+  (
+    name:(push-E ?A ?L1 ?L2 ?L3)
+    signature:[agent position position position]
+    preconditions:
+      {
+        (map ?L3):free
+        (E ?L2 ?L1):true
+        (at ?A):?L1
+        (map ?L2):box
+        (E ?L3 ?L2):true
+        (map ?L1):agnt
+      }
+
+    effects:{(at ?A):?L2 (map ?L2):agnt (map ?L1):free (map ?L3):box}
+  )
+
+  (
+    name:(push-S ?A ?L1 ?L2 ?L3)
+    signature:[agent position position position]
+    preconditions:
+      {
+        (S ?L3 ?L2):true
+        (map ?L3):free
+        (map ?L2):box
+        (at ?A):?L1
+        (S ?L2 ?L1):true
+        (map ?L1):agnt
+      }
+
+    effects:{(at ?A):?L2 (map ?L2):agnt (map ?L1):free (map ?L3):box}
+  )
+
+  (
+    name:(push-W ?A ?L1 ?L2 ?L3)
+    signature:[agent position position position]
+    preconditions:
+      {
+        (map ?L3):free
+        (map ?L2):box
+        (at ?A):?L1
+        (W ?L3 ?L2):true
+        (W ?L2 ?L1):true
+        (map ?L1):agnt
+      }
+
+    effects:{(at ?A):?L2 (map ?L2):agnt (map ?L1):free (map ?L3):box}
+  )
+
+  (
+    name:(move-N ?A ?L1 ?L2)
+    signature:[agent position position]
+    preconditions:{(map ?L2):free (N ?L2 ?L1):true (at ?A):?L1}
+    effects:{(at ?A):?L2 (map ?L2):agnt (map ?L1):free}
+  )
+
+  (
+    name:(move-E ?A ?L1 ?L2)
+    signature:[agent position position]
+    preconditions:{(map ?L2):free (E ?L2 ?L1):true (at ?A):?L1}
+    effects:{(at ?A):?L2 (map ?L2):agnt (map ?L1):free}
+  )
+
+  (
+    name:(move-S ?A ?L1 ?L2)
+    signature:[agent position position]
+    preconditions:{(map ?L2):free (S ?L2 ?L1):true (at ?A):?L1}
+    effects:{(at ?A):?L2 (map ?L2):agnt (map ?L1):free}
+  )
+
+  (
+    name:(move-W ?A ?L1 ?L2)
+    signature:[agent position position]
+    preconditions:{(W ?L2 ?L1):true (map ?L2):free (at ?A):?L1}
+    effects:{(at ?A):?L2 (map ?L2):agnt (map ?L1):free}
+  )
+})
