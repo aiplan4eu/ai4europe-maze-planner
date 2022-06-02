@@ -17,16 +17,12 @@ def main():
     logger.info("loading AIDDL operators")
     DB = Container()
     freg = dfun.get_default_function_registry(DB)
-    m = parser.parse("./aiddl/domain-v2.aiddl", DB, freg, ".")
+    m = parser.parse("./aiddl/domain-v2.aiddl", DB)
     f_eval = freg.get_function_or_panic(EVAL)
-
-    
 
     operators = DB.get_processed_value_or_panic(Sym("operators"), module=m)
     domains = DB.get_processed_value_or_panic(Sym("domains"), module=m)
     signatures = DB.get_processed_value_or_panic(Sym("signatures"), module=m)
-    
-    
 
     configfile = os.environ['CONFIG'] if 'CONFIG' in os.environ else "config.json"
     logger.info("loading config from %s", configfile)

@@ -11,9 +11,12 @@ COPY . /gui
 RUN apt-get -y update
 RUN apt-get -y install git libcairo2
 
-RUN git clone https://github.com/uwe-koeckemann/AIDDL.git
+RUN git clone https://github.com/uwe-koeckemann/AIDDL.git \
+ && cd AIDDL \                                            
+ && git checkout develop
 
-ENV PYTHONPATH="/gui/AIDDL/core/python/src"
+RUN cd /gui/AIDDL/core/python && pip install -e .
+ 
 ENV AIDDL_PATH="/gui/AIDDL/core/aiddl:/gui/AIDDL/common/aiddl"
 
 EXPOSE 8061
