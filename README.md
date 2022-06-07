@@ -1,4 +1,4 @@
-# AI4EU Maze Planning, Execution and Simulation
+# AIPlan4EU Maze Planning, Execution and Simulation
 
 This is an example of integrated planning, execution and simulation that can be
 executed on the AI4EU experiments platform. A Graphical User Interface (GUI)
@@ -6,12 +6,17 @@ allows to assemble a simple maze with up to five agents, pushable obstacles, and
 goal locations.  The GUI can send a state to the simulator (to overwrite the
 simulators current state) and request the goals to be reached by the executor.
 
+This example was originally created for AI4EU and has been extended to use the
+[Unified Planning](https://github.com/aiplan4eu/unified-planning) framework
+developed in the AIPlan4EU project.
+
 Here is a simplified summary of the behavior/flow of each component.
 
 GUI: 
 1. Assemble a maze (with goal locations for agents)
-2. Request goal achievement
-3. Wait for response from executor
+2. Submit state to simulation
+3. Request goal achievement
+4. Wait for response from executor
 
 The GUI also draws the internal state of the simulator when it receives a
 message state message.
@@ -36,6 +41,49 @@ resulting solution can be executed in a cluster.
 
 Below we explain how to get this solution to run on a local Kubernetes cluster
 via Minikube.
+
+# Running via docker-compose
+
+The full example can be run by using docker-compose and a hand-coded
+orchestrator. For this we need to open one terminal for each component,
+build, and start its docker container. Finally, we run the orchestrator.
+
+Terminal 1:
+
+    cd executor 
+    docker-compose build
+    docker-compose up
+    
+Terminal 2: 
+
+    cd maze_gui 
+    docker-compose build
+    docker-compose up
+    
+Terminal 3: 
+
+    cd simulator
+    docker-compose build
+    docker-compose up
+  
+Terminal 4 (use planner folder for alternative planner): 
+
+    cd planner-up
+    docker-compose build
+    docker-compose up
+    
+Terminal 5:
+
+Running this for the first time, we need to install some python grpc libraries (ideally in some virtual environment for python):
+
+    cd orchestrator
+    pip install -r requirements.txt
+    
+After this, the orchestrator can be run with:
+
+    cd orchestrator
+    python run.py
+
 
 # Onboarding and Assembly in Acumos Design Studio
 
@@ -70,6 +118,11 @@ Then we build, tag, and push four components.
     docker build -t planner .
     docker tag planner cicd.ai4eu-dev.eu:7444/tutorials/planning-and-execution:planner-v1
     docker push cicd.ai4eu-dev.eu:7444/tutorials/planning-and-execution:planner-v1
+    
+    cd ../planner-up
+    docker build -t planner-up .
+    docker tag planner cicd.ai4eu-dev.eu:7444/tutorials/planning-and-execution:planner-up-v1
+    docker push cicd.ai4eu-dev.eu:7444/tutorials/planning-and-execution:planner-up-v1
 
 ## Onboarding in Acumos
 
@@ -101,6 +154,10 @@ These fields differ for each component:
 - Name: planner
 - Tag: planner-v1
 - Protobuf: [planner.proto](./planner/planner.proto)
+
+- Name: planner-up
+- Tag: planner-up-v1
+- Protobuf: [planner.proto](./planner-up/planner-up.proto)
 
 ## Setting Model Categories
 
