@@ -1,4 +1,4 @@
 grpcio==1.37.0
 grpcio-tools==1.37.0
-unified-planning==0.3.0
-up-tamer==0.1.0
+unified-planning==0.4.2
+unified-planning[fast-downward]

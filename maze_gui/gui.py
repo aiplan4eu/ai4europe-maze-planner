@@ -6,6 +6,7 @@ import logging
 
 from aiddl_core.representation.int import Int
 from aiddl_core.representation.sym import Sym
+from aiddl_core.representation import Boolean
 from aiddl_core.representation.tuple import Tuple
 from aiddl_core.representation.key_value import KeyValue
 from aiddl_core.tools.logger import Logger
@@ -21,62 +22,62 @@ def draw_state(s, g, dim, images):
                      displayInline=False)
 
     for e in s:
-        sv = e.get_key()
-        v = e.get_value()
-        # print(sv, v)
-        if sv[0] == Sym("map"):
-            x = sv[1][0].int_value()
-            y = sv[1][1].int_value()
-            r_x = x*size
-            r_y = screen_size-y*size-size
-            # print(x, y)
-            color = '#dde3ed'
-            if v == m.WALL:
-                color = '#18181a'
-            elif v == m.FREE:
+        if e.get_value() == Sym("true") or  e.get_value() == Boolean(True):
+            sv = e.get_key()
+            # print(sv, v)
+            if sv[0] == Sym("map"):
+                v = sv[2]
+                x = int(str(sv[1]).replace("x", "").split("y")[1])
+                y = int(str(sv[1]).replace("x", "").split("y")[0])
+                r_x = x*size
+                r_y = screen_size-y*size-size
+                # print(x, y)
                 color = '#dde3ed'
-            elif v == m.BOX:
-                color = '#915d0f'
-            elif v in set([m.A1, m.A2, m.A3, m.A4, m.A5, m.AGENT]):
-                color = '#ed761a'
-            else:
-                color = '#cf1329'
-            r = draw.Rectangle(r_x,
-                               r_y,
-                               size,
-                               size,
-                               fill=color)
+                if v == m.WALL:
+                    color = '#18181a'
+                elif v == m.FREE:
+                    color = '#dde3ed'
+                elif v == m.BOX:
+                    color = '#915d0f'
+                elif v in set([m.A1, m.A2, m.A3, m.A4, m.A5, m.AGENT]):
+                    color = '#ed761a'
+                else:
+                    color = '#cf1329'
+                r = draw.Rectangle(r_x,
+                                   r_y,
+                                   size,
+                                   size,
+                                   fill=color)
 
-            d.append(r)
-            r.appendTitle(str(v))
+                d.append(r)
+                r.appendTitle(str(v))
 
     for e in s:
-        sv = e.get_key()
-        v = e.get_value()
-        # print(sv, v)
-        if sv[0] == Sym("map"):
-            x = sv[1][0].int_value()
-            y = sv[1][1].int_value()
-            r_x = x*size
-            r_y = screen_size-y*size-size
-            if v in set([m.A1, m.A2, m.A3, m.A4, m.A5]):
-                text_x = x*size + 2
-                text_y = screen_size - y*size - size + 8
-                d.append(draw.Text(str(v),
-                                   30,
-                                   text_x,
-                                   text_y,
-                                   fill='black'))
-            d.append(r)
-            r.appendTitle(str(v))
+        if e.get_value() == Sym("true") or  e.get_value() == Boolean(True):
+            sv = e.get_key()
+            # print(sv, v)
+            if sv[0] == Sym("at"):
+                v = sv[1]
+                x = int(str(sv[2]).replace("x", "").split("y")[1])
+                y = int(str(sv[2]).replace("x", "").split("y")[0])
+                r_x = x*size
+                r_y = screen_size-y*size-size
+                if v in set([m.A1, m.A2, m.A3, m.A4, m.A5]):
+                    text_x = x*size + 2
+                    text_y = screen_size - y*size - size + 8
+                    d.append(draw.Text(str(v),
+                                       30,
+                                       text_x,
+                                       text_y,
+                                       fill='black'))
 
     for e in g:
         if e not in s:
             sv = e.get_key()
-            v = e.get_value()
+            v = sv[2]
             # print(sv, v)
-            x = v[0].int_value()
-            y = v[1].int_value()
+            x = int(str(v).replace("x", "").split("y")[1])
+            y = int(str(v).replace("x", "").split("y")[0])
             r_x = x*size
             r_y = screen_size-y*size-size
             color = '#cf3f13'

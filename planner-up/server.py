@@ -4,8 +4,9 @@ import logging
 import time
 import grpc
 
-from unified_planning.solvers.results import POSITIVE_OUTCOMES
+from unified_planning.engines.results import POSITIVE_OUTCOMES
 from unified_planning.shortcuts import Problem, OneshotPlanner
+from unified_planning.io import PythonWriter
 
 import planner_pb2 as planner_pb2
 import planner_pb2_grpc as planner_pb2_grpc
@@ -33,22 +34,25 @@ class UnifiedPlanningServicer(planner_pb2_grpc.AiddlPlannerServicer):
         logger.info("assembling problem")
         problem = parse_term(request.problem)
 
-        print(Logger.pretty_print(problem, 1))
+        logger.info(Logger.pretty_print(problem, 1))
 
         logger.info("Converting AIDDL 2 UP problem...")
         problem_up = aiddl_svp_2_up(problem, "maze")
 
-        print(problem_up)
-
+        writer = PythonWriter(problem_up)
+        logger.info("UP Problem:")
+        logger.info(str(problem_up)) #writer.write_problem_code())
         
         response = planner_pb2.Solution(status=1, action=[])
+
+        logger.info("Problem kind: %s" % (problem_up.kind))
 
         with OneshotPlanner(problem_kind=problem_up.kind) as planner:
             logger.info("Running UP...")
             final_report = planner.solve(problem_up)
             logger.info("Assembling response from report...")
 
-            print(final_report)
+            logger.info(str(final_report))
             
             if final_report.status in POSITIVE_OUTCOMES:
                 plan = final_report.plan

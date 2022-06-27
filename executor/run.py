@@ -17,7 +17,7 @@ def main():
     logger.info("loading AIDDL operators")
     DB = Container()
     freg = dfun.get_default_function_registry(DB)
-    m = parser.parse("./aiddl/domain-v2.aiddl", DB)
+    m = parser.parse("./aiddl/domain-v3.aiddl", DB)
     f_eval = freg.get_function_or_panic(EVAL)
 
     operators = DB.get_processed_value_or_panic(Sym("operators"), module=m)

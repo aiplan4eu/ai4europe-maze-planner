@@ -23,7 +23,7 @@ def main():
 
     server = UnifiedPlanningServicer(grpcport)
 
-    logger.info("starting simulation server on port %s" % grpcport)
+    logger.info("starting unified planning server on port %s" % grpcport)
     server.start()
     server.wait_for_termination()
 

@@ -1,5 +1,6 @@
 from aiddl_core.container.container import Container
 from aiddl_core.representation.sym import Sym
+from aiddl_core.representation import Boolean
 from aiddl_core.representation.int import Int
 from aiddl_core.representation.tuple import Tuple
 from aiddl_core.representation.key_value import KeyValue
@@ -53,10 +54,11 @@ class Region:
                     KeyValue(
                         Tuple([
                             Sym("at"),
-                            value]),
-                        Tuple(
-                            [Int(i),
-                             Int(j)])))
+                            value,
+                            Tuple(
+                                [Int(i),
+                                 Int(j)])]),
+                        Sym("true")))
         return Set(state)
 
     def get_state_and_goal(self):
@@ -66,23 +68,23 @@ class Region:
             for j in range(self.dim):
                 if j > 0:
                     state.add(KeyValue(Tuple([Sym("N"),
-                                              Tuple([Int(i), Int(j-1)]),
-                                              Tuple([Int(i), Int(j)])]),
+                                              Sym("x%dy%d" % (i, j-1)),
+                                              Sym("x%dy%d" % (i, j))]),
                                        Sym("true")))
                 if j < (self.dim-1):
                     state.add(KeyValue(Tuple([Sym("S"),
-                                              Tuple([Int(i), Int(j+1)]),
-                                              Tuple([Int(i), Int(j)])]),
+                                              Sym("x%dy%d" % (i, j+1)),
+                                              Sym("x%dy%d" % (i, j))]),
                                        Sym("true")))
                 if i > 0:
                     state.add(KeyValue(Tuple([Sym("W"),
-                                              Tuple([Int(i-1), Int(j)]),
-                                              Tuple([Int(i), Int(j)])]),
+                                              Sym("x%dy%d" % (i-1, j)),
+                                              Sym("x%dy%d" % (i, j))]),
                                        Sym("true")))
                 if i < (self.dim-1):
                     state.add(KeyValue(Tuple([Sym("E"),
-                                              Tuple([Int(i+1), Int(j)]),
-                                              Tuple([Int(i), Int(j)])]),
+                                              Sym("x%dy%d" % (i+1, j)),
+                                              Sym("x%dy%d" % (i, j))]),
                                        Sym("true")))
 
                 value = self.m[i][j]
@@ -101,20 +103,18 @@ class Region:
                         KeyValue(
                             Tuple([
                                 Sym("at"),
-                                goal_agent]),
-                            Tuple([
-                                Int(j),
-                                Int(i)])))
+                                goal_agent,
+                                Sym("x%dy%d" % (i, j))]),
+                            Sym("true")))
                     value = FREE
                 if value in set([A1, A2, A3, A4, A5]):
                     state.add(
                         KeyValue(
                             Tuple([
                                 Sym("at"),
-                                value]),
-                            Tuple([
-                                Int(j),
-                                Int(i)])))
+                                value,
+                                Sym("x%dy%d" % (i, j))]),
+                            Sym("true")))
 
                     value = Sym("agnt")
                     
@@ -122,8 +122,14 @@ class Region:
                     KeyValue(
                         Tuple(
                             [Sym("map"),
-                             Tuple([Int(j), Int(i)])]),
-                        value))
+                             Sym("x%dy%d" % (i, j)),
+                             value]),
+                        Sym("true")))
+
+                    
+        print("State:", Set(state))
+        print("Goal: ", Set(goal))
+              
         return (Set(state), Set(goal))
 
 
