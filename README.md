@@ -121,7 +121,7 @@ Then we build, tag, and push four components.
     
     cd ../planner-up
     docker build -t planner-up .
-    docker tag planner cicd.ai4eu-dev.eu:7444/tutorials/planning-and-execution:planner-up-v1
+    docker tag planner-up cicd.ai4eu-dev.eu:7444/tutorials/planning-and-execution:planner-up-v1
     docker push cicd.ai4eu-dev.eu:7444/tutorials/planning-and-execution:planner-up-v1
 
 ## Onboarding in Acumos

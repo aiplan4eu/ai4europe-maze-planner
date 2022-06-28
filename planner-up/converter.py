@@ -132,14 +132,14 @@ def aiddl_svp_2_up(aiddl, name):
         sig = OrderedDict()
         for i in range(len(a[Sym("signature")])):
             t = type_map[a[Sym("signature")][i]]
-            p = str(a[Sym("name")][i+1])
+            p = str(a[Sym("name")][i+1]).replace("?", "")
             sig[p] = t
         #print(sig)
         action = InstantaneousAction(str(name), sig)
         param_map = {}
         for i in range(1, len(a[Sym("name")])):
             p = a[Sym("name")][i]
-            param = action.parameter(str(p))
+            param = action.parameter(str(p).replace("?", ""))
             param_map[p] = param
 
         for cond in a[Sym("preconditions")]:

@@ -15,10 +15,14 @@ RUN git clone https://github.com/uwe-koeckemann/AIDDL.git \
  && cd AIDDL \                                            
  && git checkout develop
 
+RUN git clone https://github.com/aiplan4eu/unified-planning.git
+
 RUN cd /gui/AIDDL/core/python && pip install -e .
  
 ENV AIDDL_PATH="/gui/AIDDL/core/aiddl:/gui/AIDDL/common/aiddl"
 
-EXPOSE 8061
+RUN jupyter trust ./unified-planning/notebooks/*.ipynb
 
-CMD [ "python3", "run.py" ]
+EXPOSE 8061 8062
+
+CMD [ "./start.sh" ]

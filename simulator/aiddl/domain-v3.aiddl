@@ -4,7 +4,7 @@
 
 (org.aiddl.type.term domains 
   {
-    agent:[A1 A2 A3 A4 A5]
+    agent:[a1 a2 a3 a4 a5]
     object:[free wall box agnt]
     position:[
       x0y0 x0y1 x0y2 x0y3 x0y4
@@ -31,7 +31,7 @@
 
 (Operators@P operators {
   (
-    name:(push-N ?A ?L1 ?L2 ?L3)
+    name:(push-n ?A ?L1 ?L2 ?L3)
     signature:[agent position position position]
     preconditions:
       {
@@ -56,7 +56,7 @@
   )
 
   (
-    name:(push-E ?A ?L1 ?L2 ?L3)
+    name:(push-e ?A ?L1 ?L2 ?L3)
     signature:[agent position position position]
     preconditions:
       {
@@ -81,7 +81,7 @@
   )
 
   (
-    name:(push-S ?A ?L1 ?L2 ?L3)
+    name:(push-s ?A ?L1 ?L2 ?L3)
     signature:[agent position position position]
     preconditions:
       {
@@ -106,7 +106,7 @@
   )
 
   (
-    name:(push-W ?A ?L1 ?L2 ?L3)
+    name:(push-w ?A ?L1 ?L2 ?L3)
     signature:[agent position position position]
     preconditions:
       {
@@ -131,7 +131,7 @@
   )
 
   (
-    name:(move-N ?A ?L1 ?L2)
+    name:(move-n ?A ?L1 ?L2)
     signature:[agent position position]
     preconditions:{
         (map ?L2 free):true
@@ -149,7 +149,7 @@
   )
 
   (
-    name:(move-E ?A ?L1 ?L2)
+    name:(move-e ?A ?L1 ?L2)
     signature:[agent position position]
     preconditions:{
         (map ?L2 free):true
@@ -167,7 +167,7 @@
   )
 
   (
-    name:(move-S ?A ?L1 ?L2)
+    name:(move-s ?A ?L1 ?L2)
     signature:[agent position position]
     preconditions:{
         (map ?L2 free):true
@@ -185,7 +185,7 @@
   )
 
   (
-    name:(move-W ?A ?L1 ?L2)
+    name:(move-w ?A ?L1 ?L2)
     signature:[agent position position]
     preconditions:{
         (W ?L2 ?L1):true

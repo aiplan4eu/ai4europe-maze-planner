@@ -7,6 +7,7 @@ import grpc
 from unified_planning.engines.results import POSITIVE_OUTCOMES
 from unified_planning.shortcuts import Problem, OneshotPlanner
 from unified_planning.io import PythonWriter
+from unified_planning.io import PDDLWriter
 
 import planner_pb2 as planner_pb2
 import planner_pb2_grpc as planner_pb2_grpc
@@ -39,9 +40,14 @@ class UnifiedPlanningServicer(planner_pb2_grpc.AiddlPlannerServicer):
         logger.info("Converting AIDDL 2 UP problem...")
         problem_up = aiddl_svp_2_up(problem, "maze")
 
-        writer = PythonWriter(problem_up)
+        # writer = PythonWriter(problem_up)
+        writer = PDDLWriter(problem_up)
+
+        logger.info("UP Domain:")
+        logger.info(writer.get_domain())
+
         logger.info("UP Problem:")
-        logger.info(str(problem_up)) #writer.write_problem_code())
+        logger.info(writer.get_problem())
         
         response = planner_pb2.Solution(status=1, action=[])
 
