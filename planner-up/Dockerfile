@@ -9,7 +9,7 @@ RUN pip3 install -r requirements.txt
 COPY . /gui
 
 RUN apt-get -y update
-RUN apt-get -y install git
+RUN apt-get -y install git wget
 
 RUN git clone https://github.com/uwe-koeckemann/AIDDL.git \
  && cd AIDDL \                                            
