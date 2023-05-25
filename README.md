@@ -42,6 +42,56 @@ resulting solution can be executed in a cluster.
 Below we explain how to get this solution to run on a local Kubernetes cluster
 via Minikube.
 
+## Detailed Component Descriptions
+
+This demonstrator shows how the unified planning framework can be connected to a
+Graphical User Interface (GUI), simultor, and executor.
+
+### AIPlan4EU Demonstrator: Executor
+
+As part of the AIPlan4EU demonstrator, this model connects a Graphical User
+Interface (GUI), a planner, and a simulator. It accepts user goals, assembles
+planning problems and accepts plans, and executes sequential plans by sending
+out actions and processing action results. In the context of the AIPlan4EU
+demonstrator, the executor is part of multiple loops for state updates, action
+execution, and goal achievement. If a plan or action fails, this failure is
+reported pack to the user.
+
+### AIPlan4EU Demonstrator: Simulator
+
+This model implements a simple simulator for the maze domain used by the
+AIPlan4EU demonstrator. It accepts a state from the Graphical User Interface
+(GUI) to override the current state used by the simulator. When receiving
+actions from the executor component, it will confirm applicability to the
+current state and if possible apply the action and update its internal state and
+send state updates. In the context of the demonstrator, state updates are used
+both by the GUI to display the simulator state and by the executor which uses it
+as an initial state when assembling planning problems.
+
+### AIPlan4EU Demonstrator: Graphical User Interface (GUI)
+
+This model allows a user to assemble a maze with walls, pushable objects, and up
+to five agents and agent goal positions. The maze can be modified by clicking in
+any square to cycle through all possible elements.  Once the maze is finished,
+it can be send to a simulator. The current state received by the simulator will
+be rendered below the submit buttons. The second button allows to send the goals
+to an executor component that will attempt to reach them from the current state.
+If a plan is found, its execution can be monitored through the state updates
+displayed at the bottom.
+
+
+### AIPlan4EU Unified Planning (Demo Version)
+
+The unified planning library provides a common API for creating feature-rich
+planning domains and problems and automatically selects capable planning engines
+that support the features required by a problem. This model uses the unified
+planning library as a one-shot planner to solve problems for an AIPlan4EU
+demonstrator.
+
+Note: This model was created for demonstration purposes and does not support the
+full unified planning interface. We will provide a version supporting the full
+unified planning interface as soon as possible.
+
 # Running via docker-compose
 
 The full example can be run by using docker-compose and a hand-coded
