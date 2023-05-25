@@ -5,3 +5,5 @@ grpcio-tools==1.37.0
 imageio==2.9.0
 Jinja2==2.10.1
 justpy==0.1.5
+markupsafe==2.0.1
+aiddl-core==0.3.1

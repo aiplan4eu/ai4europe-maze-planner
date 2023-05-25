@@ -4,12 +4,12 @@ import justpy as jp
 import asyncio
 import logging
 
-from aiddl_core.representation.int import Int
-from aiddl_core.representation.sym import Sym
+from aiddl_core.representation import Int
+from aiddl_core.representation import Sym
 from aiddl_core.representation import Boolean
-from aiddl_core.representation.tuple import Tuple
-from aiddl_core.representation.key_value import KeyValue
-from aiddl_core.tools.logger import Logger
+from aiddl_core.representation import Tuple
+from aiddl_core.representation import KeyVal
+from aiddl_core.util.logger import Logger
 
 import maze_model as m
 
@@ -22,8 +22,8 @@ def draw_state(s, g, dim, images):
                      displayInline=False)
 
     for e in s:
-        if e.get_value() == Sym("true") or  e.get_value() == Boolean(True):
-            sv = e.get_key()
+        if e.value == Sym("true") or  e.value == Boolean(True):
+            sv = e.key
             # print(sv, v)
             if sv[0] == Sym("map"):
                 v = sv[2]
@@ -53,8 +53,8 @@ def draw_state(s, g, dim, images):
                 r.appendTitle(str(v))
 
     for e in s:
-        if e.get_value() == Sym("true") or  e.get_value() == Boolean(True):
-            sv = e.get_key()
+        if e.value == Sym("true") or  e.value == Boolean(True):
+            sv = e.key
             # print(sv, v)
             if sv[0] == Sym("at"):
                 v = sv[1]
@@ -73,7 +73,7 @@ def draw_state(s, g, dim, images):
 
     for e in g:
         if e not in s:
-            sv = e.get_key()
+            sv = e.key
             v = sv[2]
             # print(sv, v)
             x = int(str(v).replace("x", "").split("y")[1])

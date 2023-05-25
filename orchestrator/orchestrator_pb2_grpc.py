@@ -16,27 +16,27 @@ class AiddlExecutorStub(object):
         """
         self.assembleProblem = channel.unary_unary(
                 '/AiddlExecutor/assembleProblem',
-                request_serializer=orchestrator__pb2.Goal.SerializeToString,
-                response_deserializer=orchestrator__pb2.Problem.FromString,
+                request_serializer=orchestrator__pb2.AiddlGoal.SerializeToString,
+                response_deserializer=orchestrator__pb2.PlanRequest.FromString,
                 )
         self.doNextAction = channel.unary_unary(
                 '/AiddlExecutor/doNextAction',
                 request_serializer=orchestrator__pb2.Empty.SerializeToString,
-                response_deserializer=orchestrator__pb2.Action.FromString,
+                response_deserializer=orchestrator__pb2.AiddlAction.FromString,
                 )
         self.processPlanningResult = channel.unary_unary(
                 '/AiddlExecutor/processPlanningResult',
-                request_serializer=orchestrator__pb2.Solution.SerializeToString,
-                response_deserializer=orchestrator__pb2.Result.FromString,
+                request_serializer=orchestrator__pb2.PlanGenerationResult.SerializeToString,
+                response_deserializer=orchestrator__pb2.AiddlResult.FromString,
                 )
         self.processActionResult = channel.unary_unary(
                 '/AiddlExecutor/processActionResult',
-                request_serializer=orchestrator__pb2.Result.SerializeToString,
+                request_serializer=orchestrator__pb2.AiddlResult.SerializeToString,
                 response_deserializer=orchestrator__pb2.Empty.FromString,
                 )
         self.processState = channel.unary_unary(
                 '/AiddlExecutor/processState',
-                request_serializer=orchestrator__pb2.State.SerializeToString,
+                request_serializer=orchestrator__pb2.AiddlState.SerializeToString,
                 response_deserializer=orchestrator__pb2.Empty.FromString,
                 )
 
@@ -79,27 +79,27 @@ def add_AiddlExecutorServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'assembleProblem': grpc.unary_unary_rpc_method_handler(
                     servicer.assembleProblem,
-                    request_deserializer=orchestrator__pb2.Goal.FromString,
-                    response_serializer=orchestrator__pb2.Problem.SerializeToString,
+                    request_deserializer=orchestrator__pb2.AiddlGoal.FromString,
+                    response_serializer=orchestrator__pb2.PlanRequest.SerializeToString,
             ),
             'doNextAction': grpc.unary_unary_rpc_method_handler(
                     servicer.doNextAction,
                     request_deserializer=orchestrator__pb2.Empty.FromString,
-                    response_serializer=orchestrator__pb2.Action.SerializeToString,
+                    response_serializer=orchestrator__pb2.AiddlAction.SerializeToString,
             ),
             'processPlanningResult': grpc.unary_unary_rpc_method_handler(
                     servicer.processPlanningResult,
-                    request_deserializer=orchestrator__pb2.Solution.FromString,
-                    response_serializer=orchestrator__pb2.Result.SerializeToString,
+                    request_deserializer=orchestrator__pb2.PlanGenerationResult.FromString,
+                    response_serializer=orchestrator__pb2.AiddlResult.SerializeToString,
             ),
             'processActionResult': grpc.unary_unary_rpc_method_handler(
                     servicer.processActionResult,
-                    request_deserializer=orchestrator__pb2.Result.FromString,
+                    request_deserializer=orchestrator__pb2.AiddlResult.FromString,
                     response_serializer=orchestrator__pb2.Empty.SerializeToString,
             ),
             'processState': grpc.unary_unary_rpc_method_handler(
                     servicer.processState,
-                    request_deserializer=orchestrator__pb2.State.FromString,
+                    request_deserializer=orchestrator__pb2.AiddlState.FromString,
                     response_serializer=orchestrator__pb2.Empty.SerializeToString,
             ),
     }
@@ -124,8 +124,8 @@ class AiddlExecutor(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/AiddlExecutor/assembleProblem',
-            orchestrator__pb2.Goal.SerializeToString,
-            orchestrator__pb2.Problem.FromString,
+            orchestrator__pb2.AiddlGoal.SerializeToString,
+            orchestrator__pb2.PlanRequest.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -142,7 +142,7 @@ class AiddlExecutor(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/AiddlExecutor/doNextAction',
             orchestrator__pb2.Empty.SerializeToString,
-            orchestrator__pb2.Action.FromString,
+            orchestrator__pb2.AiddlAction.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -158,8 +158,8 @@ class AiddlExecutor(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/AiddlExecutor/processPlanningResult',
-            orchestrator__pb2.Solution.SerializeToString,
-            orchestrator__pb2.Result.FromString,
+            orchestrator__pb2.PlanGenerationResult.SerializeToString,
+            orchestrator__pb2.AiddlResult.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -175,7 +175,7 @@ class AiddlExecutor(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/AiddlExecutor/processActionResult',
-            orchestrator__pb2.Result.SerializeToString,
+            orchestrator__pb2.AiddlResult.SerializeToString,
             orchestrator__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -192,7 +192,7 @@ class AiddlExecutor(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/AiddlExecutor/processState',
-            orchestrator__pb2.State.SerializeToString,
+            orchestrator__pb2.AiddlState.SerializeToString,
             orchestrator__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -210,21 +210,21 @@ class MazeGUIStub(object):
         self.requestTask = channel.unary_unary(
                 '/MazeGUI/requestTask',
                 request_serializer=orchestrator__pb2.Empty.SerializeToString,
-                response_deserializer=orchestrator__pb2.Goal.FromString,
+                response_deserializer=orchestrator__pb2.AiddlGoal.FromString,
                 )
         self.processTaskResult = channel.unary_unary(
                 '/MazeGUI/processTaskResult',
-                request_serializer=orchestrator__pb2.Result.SerializeToString,
+                request_serializer=orchestrator__pb2.AiddlResult.SerializeToString,
                 response_deserializer=orchestrator__pb2.Empty.FromString,
                 )
         self.getState = channel.unary_unary(
                 '/MazeGUI/getState',
                 request_serializer=orchestrator__pb2.Empty.SerializeToString,
-                response_deserializer=orchestrator__pb2.State.FromString,
+                response_deserializer=orchestrator__pb2.AiddlState.FromString,
                 )
         self.visualizeState = channel.unary_unary(
                 '/MazeGUI/visualizeState',
-                request_serializer=orchestrator__pb2.State.SerializeToString,
+                request_serializer=orchestrator__pb2.AiddlState.SerializeToString,
                 response_deserializer=orchestrator__pb2.Empty.FromString,
                 )
 
@@ -262,21 +262,21 @@ def add_MazeGUIServicer_to_server(servicer, server):
             'requestTask': grpc.unary_unary_rpc_method_handler(
                     servicer.requestTask,
                     request_deserializer=orchestrator__pb2.Empty.FromString,
-                    response_serializer=orchestrator__pb2.Goal.SerializeToString,
+                    response_serializer=orchestrator__pb2.AiddlGoal.SerializeToString,
             ),
             'processTaskResult': grpc.unary_unary_rpc_method_handler(
                     servicer.processTaskResult,
-                    request_deserializer=orchestrator__pb2.Result.FromString,
+                    request_deserializer=orchestrator__pb2.AiddlResult.FromString,
                     response_serializer=orchestrator__pb2.Empty.SerializeToString,
             ),
             'getState': grpc.unary_unary_rpc_method_handler(
                     servicer.getState,
                     request_deserializer=orchestrator__pb2.Empty.FromString,
-                    response_serializer=orchestrator__pb2.State.SerializeToString,
+                    response_serializer=orchestrator__pb2.AiddlState.SerializeToString,
             ),
             'visualizeState': grpc.unary_unary_rpc_method_handler(
                     servicer.visualizeState,
-                    request_deserializer=orchestrator__pb2.State.FromString,
+                    request_deserializer=orchestrator__pb2.AiddlState.FromString,
                     response_serializer=orchestrator__pb2.Empty.SerializeToString,
             ),
     }
@@ -302,7 +302,7 @@ class MazeGUI(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/MazeGUI/requestTask',
             orchestrator__pb2.Empty.SerializeToString,
-            orchestrator__pb2.Goal.FromString,
+            orchestrator__pb2.AiddlGoal.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -318,7 +318,7 @@ class MazeGUI(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/MazeGUI/processTaskResult',
-            orchestrator__pb2.Result.SerializeToString,
+            orchestrator__pb2.AiddlResult.SerializeToString,
             orchestrator__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -336,7 +336,7 @@ class MazeGUI(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/MazeGUI/getState',
             orchestrator__pb2.Empty.SerializeToString,
-            orchestrator__pb2.State.FromString,
+            orchestrator__pb2.AiddlState.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -352,13 +352,13 @@ class MazeGUI(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/MazeGUI/visualizeState',
-            orchestrator__pb2.State.SerializeToString,
+            orchestrator__pb2.AiddlState.SerializeToString,
             orchestrator__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
 
-class AiddlPlannerStub(object):
+class UnifiedPlanningStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -367,42 +367,100 @@ class AiddlPlannerStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.plan = channel.unary_unary(
-                '/AiddlPlanner/plan',
+        self.planAnytime = channel.unary_stream(
+                '/UnifiedPlanning/planAnytime',
+                request_serializer=orchestrator__pb2.PlanRequest.SerializeToString,
+                response_deserializer=orchestrator__pb2.PlanGenerationResult.FromString,
+                )
+        self.planOneShot = channel.unary_unary(
+                '/UnifiedPlanning/planOneShot',
+                request_serializer=orchestrator__pb2.PlanRequest.SerializeToString,
+                response_deserializer=orchestrator__pb2.PlanGenerationResult.FromString,
+                )
+        self.validatePlan = channel.unary_unary(
+                '/UnifiedPlanning/validatePlan',
+                request_serializer=orchestrator__pb2.ValidationRequest.SerializeToString,
+                response_deserializer=orchestrator__pb2.ValidationResult.FromString,
+                )
+        self.compile = channel.unary_unary(
+                '/UnifiedPlanning/compile',
                 request_serializer=orchestrator__pb2.Problem.SerializeToString,
-                response_deserializer=orchestrator__pb2.Solution.FromString,
+                response_deserializer=orchestrator__pb2.CompilerResult.FromString,
                 )
 
 
-class AiddlPlannerServicer(object):
+class UnifiedPlanningServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def plan(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+    def planAnytime(self, request, context):
+        """An anytime plan request to the engine.
+        The engine replies with a stream of N `Answer` messages where:
+        - the first (N-1) message are of type `IntermediateReport`
+        - the last message is of type `FinalReport`
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def planOneShot(self, request, context):
+        """A oneshot plan request to the engine.
+        The engine replies with athe PlanGenerationResult
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def validatePlan(self, request, context):
+        """A validation request to the engine.
+        The engine replies with the ValidationResult
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def compile(self, request, context):
+        """A compiler request to the engine.
+        The engine replies with the CompilerResult
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_AiddlPlannerServicer_to_server(servicer, server):
+def add_UnifiedPlanningServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'plan': grpc.unary_unary_rpc_method_handler(
-                    servicer.plan,
+            'planAnytime': grpc.unary_stream_rpc_method_handler(
+                    servicer.planAnytime,
+                    request_deserializer=orchestrator__pb2.PlanRequest.FromString,
+                    response_serializer=orchestrator__pb2.PlanGenerationResult.SerializeToString,
+            ),
+            'planOneShot': grpc.unary_unary_rpc_method_handler(
+                    servicer.planOneShot,
+                    request_deserializer=orchestrator__pb2.PlanRequest.FromString,
+                    response_serializer=orchestrator__pb2.PlanGenerationResult.SerializeToString,
+            ),
+            'validatePlan': grpc.unary_unary_rpc_method_handler(
+                    servicer.validatePlan,
+                    request_deserializer=orchestrator__pb2.ValidationRequest.FromString,
+                    response_serializer=orchestrator__pb2.ValidationResult.SerializeToString,
+            ),
+            'compile': grpc.unary_unary_rpc_method_handler(
+                    servicer.compile,
                     request_deserializer=orchestrator__pb2.Problem.FromString,
-                    response_serializer=orchestrator__pb2.Solution.SerializeToString,
+                    response_serializer=orchestrator__pb2.CompilerResult.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'AiddlPlanner', rpc_method_handlers)
+            'UnifiedPlanning', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class AiddlPlanner(object):
+class UnifiedPlanning(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def plan(request,
+    def planAnytime(request,
             target,
             options=(),
             channel_credentials=None,
@@ -412,9 +470,60 @@ class AiddlPlanner(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/AiddlPlanner/plan',
+        return grpc.experimental.unary_stream(request, target, '/UnifiedPlanning/planAnytime',
+            orchestrator__pb2.PlanRequest.SerializeToString,
+            orchestrator__pb2.PlanGenerationResult.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def planOneShot(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/UnifiedPlanning/planOneShot',
+            orchestrator__pb2.PlanRequest.SerializeToString,
+            orchestrator__pb2.PlanGenerationResult.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def validatePlan(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/UnifiedPlanning/validatePlan',
+            orchestrator__pb2.ValidationRequest.SerializeToString,
+            orchestrator__pb2.ValidationResult.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def compile(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/UnifiedPlanning/compile',
             orchestrator__pb2.Problem.SerializeToString,
-            orchestrator__pb2.Solution.FromString,
+            orchestrator__pb2.CompilerResult.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -430,17 +539,17 @@ class AiddlSimulatorStub(object):
         """
         self.doAction = channel.unary_unary(
                 '/AiddlSimulator/doAction',
-                request_serializer=orchestrator__pb2.Action.SerializeToString,
-                response_deserializer=orchestrator__pb2.Result.FromString,
+                request_serializer=orchestrator__pb2.AiddlAction.SerializeToString,
+                response_deserializer=orchestrator__pb2.AiddlResult.FromString,
                 )
         self.getState = channel.unary_unary(
                 '/AiddlSimulator/getState',
                 request_serializer=orchestrator__pb2.Empty.SerializeToString,
-                response_deserializer=orchestrator__pb2.State.FromString,
+                response_deserializer=orchestrator__pb2.AiddlState.FromString,
                 )
         self.setState = channel.unary_unary(
                 '/AiddlSimulator/setState',
-                request_serializer=orchestrator__pb2.State.SerializeToString,
+                request_serializer=orchestrator__pb2.AiddlState.SerializeToString,
                 response_deserializer=orchestrator__pb2.Empty.FromString,
                 )
 
@@ -471,17 +580,17 @@ def add_AiddlSimulatorServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'doAction': grpc.unary_unary_rpc_method_handler(
                     servicer.doAction,
-                    request_deserializer=orchestrator__pb2.Action.FromString,
-                    response_serializer=orchestrator__pb2.Result.SerializeToString,
+                    request_deserializer=orchestrator__pb2.AiddlAction.FromString,
+                    response_serializer=orchestrator__pb2.AiddlResult.SerializeToString,
             ),
             'getState': grpc.unary_unary_rpc_method_handler(
                     servicer.getState,
                     request_deserializer=orchestrator__pb2.Empty.FromString,
-                    response_serializer=orchestrator__pb2.State.SerializeToString,
+                    response_serializer=orchestrator__pb2.AiddlState.SerializeToString,
             ),
             'setState': grpc.unary_unary_rpc_method_handler(
                     servicer.setState,
-                    request_deserializer=orchestrator__pb2.State.FromString,
+                    request_deserializer=orchestrator__pb2.AiddlState.FromString,
                     response_serializer=orchestrator__pb2.Empty.SerializeToString,
             ),
     }
@@ -506,8 +615,8 @@ class AiddlSimulator(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/AiddlSimulator/doAction',
-            orchestrator__pb2.Action.SerializeToString,
-            orchestrator__pb2.Result.FromString,
+            orchestrator__pb2.AiddlAction.SerializeToString,
+            orchestrator__pb2.AiddlResult.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -524,7 +633,7 @@ class AiddlSimulator(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/AiddlSimulator/getState',
             orchestrator__pb2.Empty.SerializeToString,
-            orchestrator__pb2.State.FromString,
+            orchestrator__pb2.AiddlState.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -540,7 +649,7 @@ class AiddlSimulator(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/AiddlSimulator/setState',
-            orchestrator__pb2.State.SerializeToString,
+            orchestrator__pb2.AiddlState.SerializeToString,
             orchestrator__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

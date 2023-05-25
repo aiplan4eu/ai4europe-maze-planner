@@ -1,10 +1,10 @@
 from aiddl_core.container.container import Container
 from aiddl_core.representation.sym import Sym
 from aiddl_core.representation import Boolean
-from aiddl_core.representation.int import Int
-from aiddl_core.representation.tuple import Tuple
-from aiddl_core.representation.key_value import KeyValue
-from aiddl_core.representation.set import Set
+from aiddl_core.representation import Int
+from aiddl_core.representation import Tuple
+from aiddl_core.representation import KeyVal
+from aiddl_core.representation import Set
 
 
 FREE = Sym("free")
@@ -51,7 +51,7 @@ class Region:
         for (i, j) in self.goal_map.keys():
             value = self.goal_map[(i, j)][1]
             state.add(
-                    KeyValue(
+                    KeyVal(
                         Tuple([
                             Sym("at"),
                             value,
@@ -67,22 +67,22 @@ class Region:
         for i in range(self.dim):
             for j in range(self.dim):
                 if j > 0:
-                    state.add(KeyValue(Tuple([Sym("N"),
+                    state.add(KeyVal(Tuple([Sym("N"),
                                               Sym("x%dy%d" % (i, j-1)),
                                               Sym("x%dy%d" % (i, j))]),
                                        Sym("true")))
                 if j < (self.dim-1):
-                    state.add(KeyValue(Tuple([Sym("S"),
+                    state.add(KeyVal(Tuple([Sym("S"),
                                               Sym("x%dy%d" % (i, j+1)),
                                               Sym("x%dy%d" % (i, j))]),
                                        Sym("true")))
                 if i > 0:
-                    state.add(KeyValue(Tuple([Sym("W"),
+                    state.add(KeyVal(Tuple([Sym("W"),
                                               Sym("x%dy%d" % (i-1, j)),
                                               Sym("x%dy%d" % (i, j))]),
                                        Sym("true")))
                 if i < (self.dim-1):
-                    state.add(KeyValue(Tuple([Sym("E"),
+                    state.add(KeyVal(Tuple([Sym("E"),
                                               Sym("x%dy%d" % (i+1, j)),
                                               Sym("x%dy%d" % (i, j))]),
                                        Sym("true")))
@@ -100,7 +100,7 @@ class Region:
                     else:
                         goal_agent = A5
                     goal.add(
-                        KeyValue(
+                        KeyVal(
                             Tuple([
                                 Sym("at"),
                                 goal_agent,
@@ -109,7 +109,7 @@ class Region:
                     value = FREE
                 if value in set([A1, A2, A3, A4, A5]):
                     state.add(
-                        KeyValue(
+                        KeyVal(
                             Tuple([
                                 Sym("at"),
                                 value,
@@ -119,7 +119,7 @@ class Region:
                     value = Sym("agnt")
                     
                 state.add(
-                    KeyValue(
+                    KeyVal(
                         Tuple(
                             [Sym("map"),
                              Sym("x%dy%d" % (i, j)),

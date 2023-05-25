@@ -3,21 +3,21 @@ syntax = "proto3";
 message Empty {
 }
 
-message State {
+message AiddlState {
   string state = 1;
 }
 
-message Goal {
+message AiddlGoal {
   string goal = 1;
 }
 
-message Result {
+message AiddlResult {
   string result = 1;
 }
 
 service MazeGUI {
-  rpc requestTask(Empty) returns(Goal);
-  rpc processTaskResult(Result) returns(Empty);
-  rpc getState(Empty) returns(State);
-  rpc visualizeState(State) returns(Empty);
+  rpc requestTask(Empty) returns(AiddlGoal);
+  rpc processTaskResult(AiddlResult) returns(Empty);
+  rpc getState(Empty) returns(AiddlState);
+  rpc visualizeState(AiddlState) returns(Empty);
 }

@@ -4,9 +4,9 @@ import grpc
 
 from concurrent import futures
 
-from aiddl_core.representation.sym import Sym
-from aiddl_core.representation.int import Int
-from aiddl_core.representation.tuple import Tuple
+from aiddl_core.representation import Sym
+from aiddl_core.representation import Int
+from aiddl_core.representation import Tuple
 from aiddl_core.parser.parser import parse_term
 
 import gui_pb2 as gui_pb2

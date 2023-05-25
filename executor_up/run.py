@@ -6,12 +6,10 @@ import aiddl_core.function.default as dfun
 from aiddl_core.function import EVAL 
 
 from aiddl_core.container.container import Container
-from aiddl_core.representation import Sym
+from aiddl_core.representation.sym import Sym
 import aiddl_core.parser.parser as parser
 
-from aiddl_core.util.logger import Logger
-
-from server import SimulationServicer
+from server import ExecutionServicer
 from server import logger
 
 
@@ -22,16 +20,18 @@ def main():
     m = parser.parse("./aiddl/domain-v3.aiddl", DB)
     f_eval = freg.get_function_or_panic(EVAL)
 
-    operators = f_eval(DB.get_entry(Sym("operators"), module=m).value)
+    operators = DB.get_processed_value_or_panic(Sym("operators"), module=m)
+    domains = DB.get_processed_value_or_panic(Sym("domains"), module=m)
+    signatures = DB.get_processed_value_or_panic(Sym("signatures"), module=m)
 
     configfile = os.environ['CONFIG'] if 'CONFIG' in os.environ else "config.json"
     logger.info("loading config from %s", configfile)
     config = json.load(open(configfile, 'rt'))
     grpcport = config['grpcport']
 
-    server = SimulationServicer(operators, grpcport)
+    server = ExecutionServicer(grpcport, operators, domains, signatures)
 
-    logger.info("starting simulation server on port %s" % grpcport)
+    logger.info("starting executor server on port %s" % grpcport)
     server.start()
     server.wait_for_termination()
 
@@ -39,3 +39,4 @@ def main():
 if __name__ == "__main__":
     main()
 
+    

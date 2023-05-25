@@ -1,23 +1,6 @@
 syntax = "proto3";
 
-message Empty {
-}
 
-message AiddlState {
-  string state = 1;
-}
-
-message AiddlGoal {
-  string goal = 1;
-}
-
-message AiddlAction {
-  string action = 1;
-}
-
-message AiddlResult {
-  string result = 1;
-}
 
 // =============== Types ================
 
@@ -809,23 +792,8 @@ message CompilerResult {
     Engine engine = 4;
 }
 
-service AiddlExecutor {
-  rpc assembleProblem(AiddlGoal) returns (PlanRequest);
-  rpc doNextAction(Empty) returns (AiddlAction);
-  rpc processPlanningResult(PlanGenerationResult) returns (AiddlResult);
-  rpc processActionResult(AiddlResult) returns (Empty);
-  rpc processState(AiddlState) returns (Empty);
-}
-
-service MazeGUI {
-  rpc requestTask(Empty) returns(AiddlGoal);
-  rpc processTaskResult(AiddlResult) returns(Empty);
-  rpc getState(Empty) returns(AiddlState);
-  rpc visualizeState(AiddlState) returns(Empty);
-}
-
 service UnifiedPlanning {
-  // An anytime plan request to the engine.
+    // An anytime plan request to the engine.
     // The engine replies with a stream of N `Answer` messages where:
     //  - the first (N-1) message are of type `IntermediateReport`
     //  - the last message is of type `FinalReport`
@@ -853,10 +821,4 @@ service UnifiedPlanning {
     // With the current UP feature set, the above plan API is likely to be sufficient.
     // In the future we might want to extend the API to have a stream of message sen to the engine.
     // rpc plan(stream Request) returns(stream Answer);
-}
-
-service AiddlSimulator {
-  rpc doAction(AiddlAction) returns (AiddlResult);
-  rpc getState(Empty) returns (AiddlState);
-  rpc setState(AiddlState) returns (Empty);
 }

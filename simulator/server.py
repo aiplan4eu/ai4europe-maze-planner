@@ -7,10 +7,10 @@ import grpc
 import simulator_pb2 as simulator_pb2
 import simulator_pb2_grpc as simulator_pb2_grpc
 
-from aiddl_core.representation.sym import Sym
-from aiddl_core.representation.tuple import Tuple
-from aiddl_core.representation.key_value import KeyValue
-from aiddl_core.representation.set import Set
+from aiddl_core.representation import Sym
+from aiddl_core.representation import Tuple
+from aiddl_core.representation import KeyVal
+from aiddl_core.representation import Set
 from aiddl_core.parser.parser import parse_term
 
 log_format = (
@@ -41,9 +41,9 @@ class SimulationServicer(simulator_pb2_grpc.AiddlSimulatorServicer):
                 o_sub = o.substitute(s)
                 logger.info("Found matching operator: %s\ntesting applicability..." % str(o_sub))
                 for p in o_sub[Sym("preconditions")]:
-                    if self.state[p.get_key()] is None \
-                       or self.state[p.get_key()] != p.get_value():
-                        applicable = False
+                    if self.state[p.key] is None \
+                       or self.state[p.key] != p.value:
+                        applicable = Falseo
                         break
                 if applicable:
                     logger.info("Operator applicable.")

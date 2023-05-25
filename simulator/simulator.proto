@@ -3,25 +3,25 @@ syntax = "proto3";
 message Empty {
 }
 
-message State {
+message AiddlState {
   string state = 1;
 }
 
-message Action {
+message AiddlAction {
   string action = 1;
 }
 
-message Operators {
+message AiddlOperators {
   repeated string ops = 1;
 }
 
-message Result {
+message AiddlResult {
   string result = 1;
 }
 
 service AiddlSimulator {
-  rpc doAction(Action) returns (Result);
-  rpc getState(Empty) returns (State);
-  rpc setState(State) returns (Empty);
-  rpc setOperators(Operators) returns (Empty);
+  rpc doAction(AiddlAction) returns (AiddlResult);
+  rpc getState(Empty) returns (AiddlState);
+  rpc setState(AiddlState) returns (Empty);
+  rpc setOperators(AiddlOperators) returns (Empty);
 }

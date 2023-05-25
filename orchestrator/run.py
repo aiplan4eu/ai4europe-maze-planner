@@ -38,7 +38,7 @@ class RequestTaskLoop(threading.Thread):
                 logger.info("Assembling problem")
                 problem = self.exec_stub.assembleProblem(goal)
                 logger.info("Solving problem")
-                solution = self.planner_stub.plan(problem)
+                solution = self.planner_stub.planOneShot(problem)
                 logger.info("Executing plan")
                 exec_result = self.exec_stub.processPlanningResult(solution)
                 logger.info("Processing plan execution result")
@@ -123,7 +123,7 @@ def main():
 
     logger.info("connecting to Planner at %s", solverconn)
     solver_channel = grpc.insecure_channel(solverconn)
-    solver_stub = orchestrator_pb_grpc.AiddlPlannerStub(solver_channel)
+    solver_stub = orchestrator_pb_grpc.UnifiedPlanningStub(solver_channel)
 
     logger.info("connecting to Executor at %s", exec_conn)
     exec_channel = grpc.insecure_channel(exec_conn)

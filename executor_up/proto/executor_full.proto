@@ -11,6 +11,10 @@ message AiddlGoal {
   string goal = 1;
 }
 
+message AiddlOperators {
+  repeated string ops = 1;
+}
+
 message AiddlAction {
   string action = 1;
 }
@@ -809,54 +813,12 @@ message CompilerResult {
     Engine engine = 4;
 }
 
+
 service AiddlExecutor {
   rpc assembleProblem(AiddlGoal) returns (PlanRequest);
   rpc doNextAction(Empty) returns (AiddlAction);
   rpc processPlanningResult(PlanGenerationResult) returns (AiddlResult);
   rpc processActionResult(AiddlResult) returns (Empty);
   rpc processState(AiddlState) returns (Empty);
-}
-
-service MazeGUI {
-  rpc requestTask(Empty) returns(AiddlGoal);
-  rpc processTaskResult(AiddlResult) returns(Empty);
-  rpc getState(Empty) returns(AiddlState);
-  rpc visualizeState(AiddlState) returns(Empty);
-}
-
-service UnifiedPlanning {
-  // An anytime plan request to the engine.
-    // The engine replies with a stream of N `Answer` messages where:
-    //  - the first (N-1) message are of type `IntermediateReport`
-    //  - the last message is of type `FinalReport`
-    rpc planAnytime(PlanRequest) returns(stream PlanGenerationResult);
-
-    // A oneshot plan request to the engine.
-    // The engine replies with athe PlanGenerationResult
-    rpc planOneShot(PlanRequest) returns(PlanGenerationResult);
-
-    // A validation request to the engine.
-    // The engine replies with the ValidationResult
-    rpc validatePlan(ValidationRequest) returns(ValidationResult);
-
-    // A compiler request to the engine.
-    // The engine replies with the CompilerResult
-    rpc compile(Problem) returns(CompilerResult);
-
-
-    // ===== About bidirectional interaction =====
-
-    // The scheme above does not allow send info to the engine after the initial request.
-    // gRPC might allow some limited form of interactions such as setting deadlines,
-    // cancel request or terminate an RPC. (https://www.grpc.io/docs/what-is-grpc/core-concepts/)
-
-    // With the current UP feature set, the above plan API is likely to be sufficient.
-    // In the future we might want to extend the API to have a stream of message sen to the engine.
-    // rpc plan(stream Request) returns(stream Answer);
-}
-
-service AiddlSimulator {
-  rpc doAction(AiddlAction) returns (AiddlResult);
-  rpc getState(Empty) returns (AiddlState);
-  rpc setState(AiddlState) returns (Empty);
+  rpc setOperators(AiddlOperators) returns (Empty);
 }

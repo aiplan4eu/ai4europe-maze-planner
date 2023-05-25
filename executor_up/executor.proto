@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+import "unified_planning.proto";
+
+message Empty {
+}
+
+message AiddlState {
+  string state = 1;
+}
+
+message AiddlGoal {
+  string goal = 1;
+}
+
+message AiddlOperators {
+  repeated string ops = 1;
+}
+
+message AiddlAction {
+  string action = 1;
+}
+
+message AiddlResult {
+  string result = 1;
+}
+
+service AiddlExecutor {
+  rpc assembleProblem(AiddlGoal) returns (PlanRequest);
+  rpc doNextAction(Empty) returns (AiddlAction);
+  rpc processPlanningResult(PlanGenerationResult) returns (AiddlResult);
+  rpc processActionResult(AiddlResult) returns (Empty);
+  rpc processState(AiddlState) returns (Empty);
+  rpc setOperators(AiddlOperators) returns (Empty);
+}
